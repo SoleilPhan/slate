@@ -274,6 +274,55 @@ ranges | This field defines ranges for faceted, numeric search fields. The value
 counts | This field defines an array of names of string fields, for which counts should be produced. The response will contain counts for each unique value of this field name among the documents matching the search query. | yes | JSON | A JSON array of field names
 drilldown | This field can be used several times. Each use defines a pair of a field name and a value. The search will only match documents that have the given value in the field name. It differs from using “fieldname:value” in the q parameter only in that the values aren’t analyzed. | yes | JSON | A JSON array with two elements, the field name and the value.
 
+
+
+
+
+
+
+
+    <form action="#" id="testSearchForm">
+        <label for="query">Search query (q)</label><br>
+        <input size="100" style="width: 400px; display:block;" type="text" name="query" id="query"><br><br>
+        <input type="submit" value="search" id="searchButton"></input><br>
+    </form>
+    <pre style="display:none;" id="output"></pre>
+    <script>
+        $(document).ready(function() {
+        var queryInput = $('#query');
+        queryInput.val('author:John');
+        var form = $("#testSearchForm");
+        form.submit(function(event) {
+            var query = queryInput.val();
+            jQuery.ajax({
+                url: '/examples/_design/ddoc/_search/books?q=' + query,
+                type: 'GET',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader("Authorization", "Basic " + btoa('thereencespedgetytolisir:c1IimpBSAC3b3A66N8LHKwKF'));
+                },
+                error: function(one, two) {
+                },
+                complete: function(jqXHR, textStatus) {
+                    var result = JSON.stringify(jQuery.parseJSON(jqXHR.responseText), null, '    ');
+                    var outputField = $("#output");
+                    outputField.show();
+                    outputField.text(result);
+                }
+            });
+            event.preventDefault();
+        });
+        form.submit();
+        });
+    </script>
+
+
+
+
+
+
+
+
+
 ### Query Syntax
 
 ```
