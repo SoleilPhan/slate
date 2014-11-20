@@ -232,7 +232,7 @@ body, html {
   z-index: 30;
   min-height: 100%;
 
-  &>h1, &>h2, &>h3, &>h4, &>p, &>table, &>ul, &>ol, &>aside, &>dl {
+  &>form, &>h1, &>h2, &>h3, &>h4, &>p, &>table, &>ul, &>ol, &>aside, &>dl{
     margin-right: $examples-width;
     padding: 0 $main-padding;
     @include box-sizing(border-box);
