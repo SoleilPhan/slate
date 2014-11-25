@@ -4,7 +4,7 @@ $(function () {
   var query_url = '_search/docs';
 
   var typeahead_opts = {
-    minLength: 3,
+    minLength: 1,
     highlight: true
   };
 
@@ -16,14 +16,14 @@ $(function () {
     }
   };
 
-  function compute_suggestions (query, cb) {
+  function compute_suggestions(query, cb) {
     $.get(query_url, { q: query + '*' }).done(function (response) {
       var res = JSON.parse(response);
       cb(res.rows);
     });
   }
 
-  function on_submit (event) {
+  function on_submit(event) {
     var section_id = $(query_input).val();
     
     $('html, body').animate({
@@ -32,7 +32,12 @@ $(function () {
 
     return false;
   }
+  
+  function logTypeaheadEvent(e) {
+		console.log(e.type);
+  }
 
   $(query_input).typeahead(typeahead_opts, typeahead_data);
   $(search_box).submit(on_submit);
+  $(query_input).on('typeahead:selected', 'typeahead:autocompleted'].join(' '), logTypeaheadEvent);
 });
